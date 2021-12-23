@@ -14,6 +14,8 @@ export const api = (request: Request, data?: Record<string, unknown>) => {
             break;
         case "POST":
             todos.push(data as Todo);
+            body = data;
+            status = 201;
             break;
         case "DELETE":
             todos = todos.filter(todo => todo.uid !== request.params.uid)
@@ -28,12 +30,15 @@ export const api = (request: Request, data?: Record<string, unknown>) => {
                 return todo
             });
             status = 200
+            body = todos.find(todo => todo.uid === request.params.uid)
             break;
         default:
             break;
     }
 
-    if (request.method.toUpperCase() !== "GET") {
+    if (request.method.toUpperCase() !== "GET" && 
+        request.headers.accept !== "application/json") {
+            console.log("test")
         return {
             // redirect to index
             status: 303,
