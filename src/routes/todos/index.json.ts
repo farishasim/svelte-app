@@ -10,6 +10,5 @@ export const post: RequestHandler<{}, FormData> = (request) => {
         created_at: new Date(),
         text: request.body.get("text"),
         done: false,
-        uid: `${Date.now()}`, // TODO replace with db's uid
     });
 }
